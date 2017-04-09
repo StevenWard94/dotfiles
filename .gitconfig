@@ -1,0 +1,87 @@
+[user]
+	# name and email associated with my github account
+	name = Steven Ward
+	email = stevenward94@gmail.com
+
+# these credential settings are applied ONLY when connecting to https://github.com
+[credential "https://github.com"]
+    # use StevenWard94 as the username for all github.com connections requiring credentials
+    username = StevenWard94
+	# enable external "helper" to store remote repo passwords for 2 hours after last entering them
+	helper = cache --timeout=7200
+
+[push]
+	default = simple
+
+[alias]
+	undo-commit = reset --soft HEAD^
+    unstage = reset HEAD --
+    stat = status --column=auto,column,nodense --untracked-files=normal
+    stats = "!git -c status.relativepath=false status --column=auto,column,dense --untracked-files=all --ignored | less -R"
+    diffstat = status -v
+	cm = commit -m
+	cm-reuse = commit -C HEAD
+    cm-reedit = commit -c HEAD
+	ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    log-tree = log --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%n' --abbrev-commit --date=relative --branches
+	last = log -1 HEAD
+    dif = diff HEAD^ HEAD
+    root = rev-parse --show-toplevel
+    add-all = "!git root | xargs git add -v"
+    upd8 = add -vu
+    new-branch = checkout -b
+    new-br = checkout -b
+    reset-tracking = "!git ls-files | xargs git rm --cached"
+    alias = config --get-regexp alias
+# aliases for SVN-like shortcuts
+    st = status
+    ci = commit
+    co = checkout
+    br = branch
+
+[color]
+	branch = always
+	diff = always
+	status = always
+	ui = always
+
+[color "branch"]
+	current = red ul bold
+	local = cyan
+	remote = magenta
+
+[color "diff"]
+	meta = yellow
+	frag = magenta
+	old = red bold
+	new = green
+	plain = white
+
+[color "status"]
+	added = green
+	changed = yellow bold
+	untracked = white dim
+
+[column]
+    branch = auto,column,nodense
+    status = auto
+
+[core]
+    autocrlf = input
+	editor = vim
+	excludesfile = /home/steven/.gitignore_global
+    whitespace = trailing-space,space-before-tab
+
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+
+[mergetool]
+    prompt = false
+
+[branch]
+    autosetuprebase = always
+
+[status]
+    relativePaths = false

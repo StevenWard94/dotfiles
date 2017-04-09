@@ -1,0 +1,53 @@
+# vim: set sw=2 ts=2 sts=2 filetype=conf:
+
+# global .gitignore file for Steven Ward --- ~/.gitignore_global
+# local (repo-specific) git-ignore patterns could potentially override any of the filename patterns listed below
+#   please refer to a repo's specific /.gitignore for changes and additions to ~/.gitignore_global
+
+# ignore any file/directory that has a name beginning with '.private'
+**/.private*
+
+# ignore certain "localized" directories
+**/.notes
+**/.incomplete
+**/.tmp
+**/.broken
+
+# ignore "local" directories (several patterns)
+**/.local/
+**/*.local*/
+**/.*.local*/
+/local/
+
+# ignore "old" directories (several patterns)
+**/.old/
+**/*.old*/
+**/.*old*/
+**/old/
+
+# ignore logs
+**/.log/
+
+# ignore executables
+**/bin
+
+# ignore files/directories associated with 'ctags'
+**/.tags
+tags
+*.taghl
+.ctags
+
+# ignore 'swap' files --- either 'zero-or-more-dirs/anyFilename.swp' or 'dirs-or-not/noMatchName.swp~'
+**/*.swp
+**/*.swp~
+
+# ignore backups --- matches filenames: *.bak~ and *~
+**/*.bak~
+**/*~
+**/.*~
+
+# ignore 'undo' files --- also matches filenames beginning w/ 2 dots b/c sometimes vim does that to my .un~ files
+**/*.un~
+**/*.un
+**/..*
+

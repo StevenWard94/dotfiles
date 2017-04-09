@@ -1,0 +1,279 @@
+" vim: fo-=oql:foldmarker=\\begin,\\end:foldmethod=marker:foldlevel=0:nospell:
+" ------------------------------------------------------------------------------
+" Vim bundles configuration file
+" Language:       N/A
+" Maintainer:     Steven Ward <stevenward94@gmail.com>
+" URL:            https://github.com/stevenward94/myvim
+" Last Change:    2017 Feb 1
+" ------------------------------------------------------------------------------
+
+if exists('g:bundles_config_loaded')
+  finish
+endif
+let g:bundles_config_loaded = 1
+
+" Setup \begin1
+
+  " Load plugins using Vim-Plug <https://github.com/junegunn/vim-plug>
+  call plug#begin('~/.vim/bundle')
+
+  "Plug 'VundleVim/Vundle.vim'
+
+  " Support Bundles
+  Plug 'Raimondi/delimitMate'
+  Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'mattn/webapi-vim'
+  Plug 'mattn/gist-vim'
+  Plug 'kien/rainbow_parentheses.vim'
+  if executable('ctags')
+    Plug 'https://github.com/StevenWard94/tagbar.git', { 'on': ['TagbarOpen', 'TagbarToggle', 'TagbarOpenAutoClose'] }
+  endif
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-repeat'
+  Plug 'abudden/taghighlight-automirror', { 'on': [] }
+  Plug 'file:///home/steven/Downloads/git-from-hg/easycolour'
+  Plug 'xolox/vim-easytags'
+  Plug 'xolox/vim-misc'
+
+  " Git
+  Plug 'tpope/vim-fugitive'
+  Plug 'int3/vim-extradite'
+  Plug 'rhysd/conflict-marker.vim'
+
+  " Bars, Panels & Files
+  Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle'] }
+  "Plug 'ctrlpvim/ctrlp.vim'
+  "Plug 'tacahiroy/ctrlp-funky'
+  Plug 'vim-airline/vim-airline'
+
+  " TMUX Related Plugins (related is used loosely...)
+  Plug 'tmux-plugins/vim-tmux' 
+  Plug 'christoomey/vim-tmux-navigator'
+
+  " Text Manipulation
+  Plug 'simnalamburt/vim-mundo'
+  Plug 'tpope/vim-commentary'
+  Plug 'godlygeek/tabular'
+  Plug 'michaeljsmith/vim-indent-object'
+  Plug 'easymotion/vim-easymotion'
+
+  "if (&filetype == 'haskell')
+    Plug 'itchyny/haskell-indent-vim', { 'for': 'haskell' }
+    Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
+    Plug 'enomsg/vim-haskellConcealPlus', { 'for': 'haskell' }
+    Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
+    Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+    Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
+    Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
+    Plug 'mpickering/hlint-refactor-vim', { 'for': 'haskell' }
+    Plug 'travitch/hasksyn', { 'for': 'haskell' }
+    Plug 'lukerandall/haskellmode-vim', { 'for': 'haskell' }
+    Plug 'adinapoli/cumino', { 'for': 'haskell' }
+    Plug 'bitc/vim-hdevtools', { 'for': 'haskell' }
+  "endif
+
+  Plug 'klen/python-mode', { 'for': 'python' }
+  Plug 'yssource/python.vim', { 'for': 'python' }
+  Plug 'python_match.vim', { 'for': 'python' }
+  Plug 'elzr/vim-json', {'for': 'json' }
+
+  Plug 'tpope/vim-rails', { 'for': 'ruby' }
+  let g:rubycomplete_buffer_loading = 1
+
+  " Clojure
+  Plug 'guns/vim-clojure-static', { 'for': 'clojure' }
+  Plug 'guns/vim-clojure-highlight', { 'for': 'clojure' }
+  Plug 'tpope/vim-salve', { 'for': 'clojure' }
+  Plug 'tpope/vim-projectionist', { 'for': 'clojure' }
+  Plug 'tpope/vim-dispatch', { 'for': 'clojure' }
+  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+  Plug 'venantius/vim-eastwood', { 'for': 'clojure' }
+  Plug 'tpope/vim-classpath', { 'for': 'clojure' }
+
+  " Colorschemes
+  Plug 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' }
+  Plug 'vim-scripts/colorful256.vim'
+  Plug 'vim-airline/vim-airline-themes'
+
+  " Recommended by Stephen Diehl
+  Plug 'scrooloose/syntastic'
+  Plug 'tomtom/tlib_vim'
+  Plug 'MarcWeber/vim-addon-mw-utils'
+
+  call plug#end()
+
+" \end1
+
+" Plugin-Specific Configurations \begin1
+
+  " Syntastic \begin2
+    map <Leader>s :SyntasticToggleMode<CR>
+
+    let g:syntastic_statusline_short = '[%E{E:%e(#%fe)}%B{,}%W{W:%w(#%fw)}]'
+    let g:syntastic_statusline_long = '[%E{Err: %e (L-%fe)}%B{, }%W{Warn: %w (L-%fw)}]'
+
+    let g:syntastic_stl_format = g:syntastic_statusline_long
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_aggregate_errors = 1
+    let g:syntastic_id_checkers = 1
+    let g:syntastic_echo_current_error = 1
+    let g:syntastic_cursor_column = 0
+    let g:syntastic_auto_loc_list = 0
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+
+    let g:syntastic_error_symbol = '❌'
+    let g:syntastic_style_error_symbol = '⁉️'
+    let g:syntastic_warning_symbol = '⚠️'
+    let g:syntastic_style_warning_symbol = '💩'
+
+    let g:syntastic_vim_checkers = ['vint']
+
+    let g:syntastic_java_checkers = ['javac']
+
+    let g:syntastic_json_checkers = ['jsonlint']
+
+    " prevent syntax checking on profiles.clj or project.clj files
+    function! Eastwood_EnableDisable()
+      let l:disable_eastwood = bufname("") =~ '\<pro\(files\|ject\)\.clj\>'
+      let b:syntastic_checkers = l:disable_eastwood ? [] : ['eastwood']
+      let b:syntastic_mode = l:disable_eastwood ? 'passive' : 'active'
+      unlet l:disable_eastwood
+    endfunction
+    autocmd BufEnter *.clj :call Eastwood_EnableDisable()
+
+    if exists(':Syntastic') != 0
+      highlight link SyntasticErrorSign SignColumn
+      highlight link SyntasticWarningSign SignColumn
+      highlight link SyntasticStyleErrorSign SignColumn
+      highlight link SyntasticStyleWarningSign SignColumn
+    endif
+
+  " \end2
+
+  " Python-Mode \begin2
+    if &filetype =~# '^python$'
+      let g:pymode_lint_on_write = 0
+      let g:pymode_lint_checkers = ['pylint', 'pep8']
+
+      let g:pymode_rope_lookup_project = 0
+      let g:pymode_rope_complete_on_dot = 0
+      let g:pymode_rope = 0
+    endif
+
+  " \end2
+
+  " Easytags \begin2
+    autocmd VimEnter .gvimrc,.vimrc,.vimrc.*,*.vim :call <SID>DisableVimEasytags()
+    let g:easytags_dynamic_files = 1
+    let g:easytags_by_filetype = '/home/steven/lib/.tags'
+    let g:easytags_syntax_keyword = 'always'
+    let g:easytags_async = 1
+
+    function! s:DisableVimEasytags() abort
+      if exists('g:easytags_events')
+        unlet g:easytags_events
+      endif
+      let g:easytags_on_cursorhold = 0
+      let g:easytags_auto_update = 0
+      let g:easytags_auto_highlight = 0
+    endfunction
+  " \end2
+
+  " GHC-Mod \begin2
+    function! s:GHCmod_hask() abort
+      map <silent> tw :GhcModTypeInsert<CR>
+      map <silent> ts :GhcModSplitFunCase<CR>
+      map <silent> tq :GhcModType<CR>
+      map <silent> te :GhcModTypeClear<CR>
+    endfunction
+  " \end2
+
+  " Neco-GHC \begin2
+    function! s:NecoGHC_hask() abort
+      let g:haskellmode_completion_ghc = 1
+      setlocal omnifunc=necoghc#omnifunc
+    endfunction
+  " \end2
+
+  " NERDTree \begin2
+    map <leader>n :NERDTreeToggle<CR>
+  " \end2
+
+  " Tabularize \begin2
+    function! s:Tabularize_hask() abort
+      let g:haskell_tabular = 1
+
+      vmap a= :Tabularize /=<CR>
+      vmap a; :Tabularize /::<CR>
+      vmap a- :Tabularize /-><CR>
+    endfunction
+  " \end2
+
+  " CtrlP \begin2
+    let g:ctrlp_custom_ignore = {
+          \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+          \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+   \}
+
+    " Use the nearest .git directory as the cwd for ctrlp
+    let g:ctrlp_working_path_mode = 'r'
+
+    " Mapping for ':CtrlP' command
+    nmap <leader>p :CtrlP<CR>
+
+    " Easy bindings for various ctrlp modes
+    nmap <leader>bb :CtrlPBuffer<CR>
+    nmap <leader>bm :CtrlPMixed<CR>
+    nmap <leader>bs :CtrlPMRU<CR>
+  " \end2
+
+  " Airline \begin2
+    if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+    endif
+
+    " Use powerline fonts for airline
+    let g:airline_powerline_fonts = 1
+    let g:airline_symbols.space = "\ua0"
+
+    let g:airline#extensions#tagbar#enabled = 0
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#fnamemod = ':t'
+  " \end2
+
+  " delimitMate \begin2
+    let delimitMate_expand_cr = 1
+  " \end2
+
+  " Haskell-Only \begin2
+    " This autocmd group configures certain settings for plugins which,
+    " are only loaded when filetype=haskell and thus caused problems when attempting to
+    " set variables or call functions that are non-existant for other file types
+    " The functions called by the autocmds are defined above in the section for the
+    " corresponding plugin
+    augroup justhask_plugins
+      autocmd!
+      autocmd FileType haskell :call s:GHCmod_hask()
+      autocmd FileType haskell :call s:NecoGHC_hask()
+      autocmd FileType haskell :call s:Tabularize_hask()
+    augroup END
+    " \end2
+
+    " Easymotion \begin2
+      map <LocalLeader> <Plug>(easymotion-prefix)
+    " \end2
+
+    " Rainbow Parentheses \begin2
+      autocmd VimEnter * RainbowParenthesesToggle
+      autocmd Syntax * RainbowParenthesesLoadRound
+      autocmd Syntax * RainbowParenthesesLoadSquare
+      autocmd Syntax * RainbowParenthesesLoadBraces
+    " \end2
+      
+" \end1
+

@@ -1,0 +1,41 @@
+# global vim-vint config
+
+cmdargs:
+    # report warnings, errors and "style" problems
+    severity: style_problem
+    # show "statistics" (e.g. "Total Violations: 20")
+    stat: true
+    # colorize output
+    color: true
+
+policies:
+    # disable warnings for ':set nocompatible'
+    ProhibitSetNoCompatible:
+        enabled: false
+
+    # disable warnings for implicit variable scope
+    ProhibitImplicitScopeVariable:
+        enabled: false
+
+    # disable warnings for using regex equality operator w/o case-sensitivity specifier (i.e. # or ?)
+    ProhibitEqualTildeOperator:
+        enabled: false
+
+    # disable warnings for using double quotes (broke code on occasion, when corrected...)
+    ProhibitUnnecessaryDoubleQuote:
+        enabled: false
+
+    # disable warnings for defining autocmd in "global augroup"
+    ProhibitAutocmdWithNoGroup:
+        enabled: false
+
+    # disable warnings for using commands that rely on user settings
+    ProhibitCommandRelyOnUser:
+        enabled: false
+
+    # disable warnings about commands with side-effects (i.e. '%s/\s\+$//e' in 'StripTrailingWhitespace()' functions
+    ProhibitCommandWithUnintendedSideEffect:
+        enabled: false
+
+    ProhibitMissingScriptEncoding:
+        enabled: false
