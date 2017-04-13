@@ -23,12 +23,12 @@
   endif
 
   " use 'helper configs' if they exist \begin
-    if filereadable(expand("~/.vim/config/.vimrc.before"))
+    if filereadable(expand("~/dotfiles/.vimrc.before"))
       silent source ~/.vimrc.before
     endif
 
-    " For initialization of plugin manager, see this file (.vim/config/.vimrc.bundles
-    if filereadable(expand("~/.vim/config/.vimrc.bundles"))
+    " For initialization of plugin manager, see this file (dotfiles/.vimrc.bundles)
+    if filereadable(expand("~/dotfiles/.vimrc.bundles"))
       silent source ~/.vimrc.bundles
     endif
 

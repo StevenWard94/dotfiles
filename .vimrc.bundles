@@ -4,7 +4,7 @@
 " Language:       N/A
 " Maintainer:     Steven Ward <stevenward94@gmail.com>
 " URL:            https://github.com/stevenward94/myvim
-" Last Change:    2017 Feb 1
+" Last Change:    2017 Apr 11
 " ------------------------------------------------------------------------------
 
 if exists('g:bundles_config_loaded')
@@ -45,6 +45,7 @@ let g:bundles_config_loaded = 1
   "Plug 'ctrlpvim/ctrlp.vim'
   "Plug 'tacahiroy/ctrlp-funky'
   Plug 'vim-airline/vim-airline'
+  "Plug 'bling/vim-bufferline'
 
   " TMUX Related Plugins (related is used loosely...)
   Plug 'tmux-plugins/vim-tmux' 
