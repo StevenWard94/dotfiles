@@ -56,6 +56,9 @@ alias repl='lein repl'
 # autocorrect for 'apt-get' commands w/o root priveleges
 alias apt-get='sudo apt-get'
 
+# shorthand for 'stack ghci' to open haskell repl
+alias ghci='stack ghci'
+
 # shorthand to execute apt-get update followed by dist-upgrade
 alias apt-update='sudo apt-get update && sudo apt-get dist-upgrade -y'
 
