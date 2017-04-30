@@ -37,6 +37,9 @@ tags
 *.taghl
 .ctags
 
+# ignore configuration files for the 'syntastic' Vim plugin
+**/.syntastic.conf
+
 # ignore 'swap' files --- either 'zero-or-more-dirs/anyFilename.swp' or 'dirs-or-not/noMatchName.swp~'
 **/*.swp
 **/*.swp~

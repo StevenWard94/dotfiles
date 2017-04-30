@@ -1,4 +1,9 @@
-" vim: set foldmarker=\\begin,\\end foldmethod=marker foldlevel=0 tw=120 fo=cr1jb wm=0 expandtab sw=2 ts=2 sts=2 nospell:
+" Vim user configuration file
+" Configure Target: General User - terminal-based Vim
+" Maintainer:       Steven Ward <stevenward94@gmail.com>
+" URL:              https://github.com/StevenWard94/myvim
+" Last Change:      2017 Apr 21
+" ======================================================================================================================
 
 " General Settings \begin
 
@@ -570,3 +575,7 @@
   endfunction
 
 " \end
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim: set foldmarker=\\begin,\\end foldmethod=marker foldlevel=0 tw=120 fo=cr1jb wm=0 expandtab sw=2 ts=2 sts=2 nospell:

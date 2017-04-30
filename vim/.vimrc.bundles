@@ -1,11 +1,9 @@
-" vim: fo-=oql:foldmarker=\\begin,\\end:foldmethod=marker:foldlevel=0:nospell:
-" ------------------------------------------------------------------------------
-" Vim bundles configuration file
-" Language:       N/A
-" Maintainer:     Steven Ward <stevenward94@gmail.com>
-" URL:            https://github.com/stevenward94/myvim
-" Last Change:    2017 Apr 11
-" ------------------------------------------------------------------------------
+" Vim user configuration file
+" Configure Target: Plugins and their Related Options
+" Maintainer:       Steven Ward <stevenward94@gmail.com>
+" URL:              https://github.com/StevenWard94/myvim
+" Last Change:      2017 Apr 30
+" ======================================================================================================================
 
 if exists('g:bundles_config_loaded')
   finish
@@ -49,7 +47,7 @@ let g:bundles_config_loaded = 1
 
   " TMUX Related Plugins (related is used loosely...)
   Plug 'tmux-plugins/vim-tmux' 
-  Plug 'christoomey/vim-tmux-navigator'
+  "Plug 'christoomey/vim-tmux-navigator'
 
   " Text Manipulation
   Plug 'simnalamburt/vim-mundo'
@@ -73,10 +71,10 @@ let g:bundles_config_loaded = 1
     Plug 'bitc/vim-hdevtools', { 'for': 'haskell' }
   "endif
 
-  Plug 'klen/python-mode', { 'for': 'python' }
-  Plug 'yssource/python.vim', { 'for': 'python' }
-  Plug 'python_match.vim', { 'for': 'python' }
-  Plug 'elzr/vim-json', {'for': 'json' }
+  "Plug 'klen/python-mode', { 'for': 'python' }
+  "Plug 'yssource/python.vim', { 'for': 'python' }
+  "Plug 'python_match.vim', { 'for': 'python' }
+  "Plug 'elzr/vim-json', {'for': 'json' }
 
   Plug 'tpope/vim-rails', { 'for': 'ruby' }
   let g:rubycomplete_buffer_loading = 1
@@ -109,6 +107,12 @@ let g:bundles_config_loaded = 1
 
   " Syntastic \begin2
     map <Leader>s :SyntasticToggleMode<CR>
+
+    "let g:syntastic_cpp_compiler = 'clang++'
+    "let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libstdc++ -Wall'
+    "let g:syntastic_cpp_checkers = [ 'clang_check' ]
+
+    "let g:syntastic_cpp_check_header = 1
 
     let g:syntastic_statusline_short = '[%E{E:%e(#%fe)}%B{,}%W{W:%w(#%fw)}]'
     let g:syntastic_statusline_long = '[%E{Err: %e (L-%fe)}%B{, }%W{Warn: %w (L-%fw)}]'
@@ -278,3 +282,5 @@ let g:bundles_config_loaded = 1
       
 " \end1
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim: fo-=oql:foldmarker=\\begin,\\end:foldmethod=marker:foldlevel=0:nospell:
