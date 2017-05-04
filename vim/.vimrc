@@ -2,7 +2,7 @@
 " Configure Target: General User - terminal-based Vim
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/myvim
-" Last Change:      2017 Apr 21
+" Last Change:      2017 May 1
 " ======================================================================================================================
 
 " General Settings \begin
@@ -28,12 +28,12 @@
   endif
 
   " use 'helper configs' if they exist \begin
-    if filereadable(expand("~/dotfiles/.vimrc.before"))
+    if filereadable(expand("~/.vimrc.before"))
       silent source ~/.vimrc.before
     endif
 
     " For initialization of plugin manager, see this file (dotfiles/.vimrc.bundles)
-    if filereadable(expand("~/dotfiles/.vimrc.bundles"))
+    if filereadable(expand("~/.vimrc.bundles"))
       silent source ~/.vimrc.bundles
     endif
 
@@ -41,28 +41,6 @@
     set exrc
   " \end
 
-  " define a helpful environment variable that points to vim user directory
-  if exists("$MYVIMRC")
-    let vim_home = fnamemodify(expand("$MYVIMRC"), ":p:h").'/.vim'
-    if isdirectory(vim_home)
-      let $VIMHOME = vim_home
-    endif
-    unlet vim_home
-  endif
-  if !exists("$VIMHOME") && exists("$HOME")
-    let ls_home = split(system('ls -A $HOME'), '\n')
-    let index = match(ls_home, '^\.vim$')
-    if index != -1
-      let $VIMHOME = ls_home[index]
-    endif
-    unlet ls_home
-    unlet index
-  endif
-  if exists("$VIMHOME")
-    let $MYVIM = $VIMHOME    " environment variable (alias) pointing to $VIMHOME
-  endif
-
-  set background=dark
   " create function to toggle background and map it to <leader>bg \begin
     function! ToggleBackground()
       let s:bgtoggle = &background
