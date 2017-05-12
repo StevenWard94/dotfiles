@@ -72,12 +72,13 @@ alias info='pinfo'
 # mzscheme crashes - use racket implementation instead
 alias mzscheme='racket'
 
-# make pip3 use python3.6
-alias pip3='python3.6 -m pip'
+# make different "pips" always refer to a specific python version
+alias pip2='python2.7 -m pip'
+alias pip3='python3.5 -m pip'
 
 # shortcut to update all python packages installed w/ 'pip'
-alias pip2-update="pip2 freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H pip2 install --upgrade"
-alias pip3-update="python3.6 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H python3.6 -m pip install --upgrade"
+alias pip2-update="python2.7 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H python2.7 -m pip install --upgrade"
+alias pip3-update="python3.5 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H python3.5 -m pip install --upgrade"
 
 # always run tmux with 256-color support
 alias tmux='tmux -2'

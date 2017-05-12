@@ -59,23 +59,32 @@ md () {
 
 
 # function to determine whether a PPA has already been added to APT's sources
-apt_locate_repo () {
-    if [[ -z $1 ]]; then
-        echo "Error: apt_locate_repo requires at least one PPA name argument"
+apt_repo_added () {
+    if [[ $# < 1 ]]; then
+        printf 'ERROR: %s requires at least one ppa/repo name\n' "$0"
+        printf 'USAGE: %s [ppa-names...] [other-repos...]\n' "$0"
+        return 126
+    fi
+
+    (( to_stderr = 0 ))
+    for src in "$@"; do
+        local regex='^\s*[^#].*'"${src}"
+        local search_result=( "$(grep -iEl ${regex} /etc/apt/sources.list /etc/apt/sources.list.d/*)" )
+        if [[ -z ${search_result[@]} ]]; then
+            >&2 printf 'no matches found for in apt sources for: %s\n' "${src}"
+            (( to_stderr++ ))
+        else
+            printf 'match found in apt source file(s): '
+            for file in "${search_result[@]}"; do
+                printf ' %s ' "${file}"
+            done
+            printf '\n'
+        fi
+    done
+    if [[ to_stderr != 0 ]]; then
+        return 1
     else
-        for ppa in "$@"; do
-            regex='^\s*[^#].*'$ppa'.*'
-            search_result=("$(grep -El $regex /etc/apt/sources.list /etc/apt/sources.list.d/*)")
-            if [[ -z $search_result ]]; then
-                echo "ppa: $ppa not found in apt sources"
-            else
-                echo "ppa: $ppa found in file(s):"
-                for file in "${search_result[@]}"; do
-                    echo "    $file"
-                done
-            fi
-            echo ""
-        done
+        return 0
     fi
 }
 
@@ -128,7 +137,7 @@ unix_to_dos () {
 
 describe_pkg () {
     if [[ $# < 1 ]]; then
-        echo "Usage: $0 package-name"
+        printf 'Usage: %s [package-name]\n' "$0"
         return 1
     fi
 

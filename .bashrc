@@ -9,9 +9,22 @@ case $- in
 esac
 
 # add user's HOME binaries to PATH
-if [[ -d $HOME/bin ]]; then
-    PATH="$HOME/bin:${PATH}"
+if [[ -d ${HOME}/bin ]]; then
+    case ":${PATH}:" in
+        *":${HOME}/bin:"*) ;;
+        *) PATH="${HOME}/bin${PATH:+:${PATH}}";;
+    esac
 fi
+
+
+# add binaries under ~/.local/bin to $PATH environment variable
+if [[ -d ${HOME}/.local/bin ]]; then
+    case ":${PATH}:" in
+        *"${HOME}/.local/bin"*) ;;
+        *) PATH="${HOME}/.local/bin${PATH:+:${PATH}}" ;;
+    esac
+fi
+
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -89,8 +102,8 @@ fi
 
 # enable Powerline
 if type powerline >/dev/null 2>&1; then
-    export POWERLINE_DIR='/home/steven/.local/lib/python2.7/site-packages/powerline'
-    export POWERLINE_CONFIG='/home/steven/.local/lib/python2.7/site-packages/powerline/config_files'
+    export POWERLINE_DIR="${HOME}/.local/lib/python2.7/site-packages/powerline"
+    export POWERLINE_CONFIG="${HOME}/.local/lib/python2.7/site-packages/powerline/config_files"
 
     powerline-daemon -q
     POWERLINE_BASH_CONTINUATION=1
@@ -124,11 +137,6 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
-fi
-
-# source script to handle adding necessary directories to PATH
-if [[ -r $HOME/.path.init ]]; then
-    source "$HOME/.path.init"
 fi
 
 export NVM_DIR="$HOME/.nvm"
@@ -169,8 +177,34 @@ export NVM_DIR="$HOME/.nvm"
 . ~/.bash_functions
 
 
-PATH="/home/steven/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/steven/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/steven/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/steven/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/steven/perl5"; export PERL_MM_OPT;
+# add perl binaries to $PATH environment variable
+if [[ -d ${HOME}/perl5/bin ]]; then
+    case ":${PATH}:" in
+        *":${HOME}/perl5/bin:"*) ;;
+        *) PATH="${HOME}/perl5/bin${PATH:+:${PATH}}";;
+    esac
+fi
+
+# define other environment variables for perl5 libraries
+PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"${HOME}/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=${HOME}/perl5"; export PERL_MM_OPT;
+
+
+# add $PYENV_ROOT environment variable and put pyenv binaries in $PATH
+if [[ -d ${HOME}/.pyenv ]]; then
+    export PYENV_ROOT="${HOME}/.pyenv"
+    case ":${PATH}:" in
+        *":${PYENV_ROOT}/bin:"*) ;;
+        *) PATH="${PYENV_ROOT}/bin${PATH:+:${PATH}}" ;;
+    esac
+fi
+
+# call `pyenv init` to enable shims & autocompletion in shell
+eval "$(pyenv init -)"
+
+
+# remove duplicate entries from $PATH environment variable
+PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
+export PATH

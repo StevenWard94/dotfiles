@@ -27,6 +27,13 @@
     inoremap <silent> <C-[>OC <RIGHT>
   endif
 
+  if has('nvim')
+    let $VIMHOME = '/home/steven/.config/nvim'
+    let $NVIMHOME = $VIMHOME
+  elseif !exists('$VIMHOME') || empty($VIMHOME)
+    let $VIMHOME = local#utils#define_vimhome()
+  endif
+
   " use 'helper configs' if they exist \begin
     if filereadable(expand("~/.vimrc.before"))
       silent source ~/.vimrc.before
