@@ -62,6 +62,9 @@ alias ghci='stack ghci'
 # shorthand to execute apt-get update followed by dist-upgrade
 alias apt-update='sudo apt-get update && sudo apt-get dist-upgrade -y'
 
+# shorthand to execute apt-get purge
+alias purge='sudo apt-get purge'
+
 # shorthand to quickly perform apt-cache operations
 alias find-pkg='apt-cache search --names-only'
 alias show-pkg='apt-cache show'

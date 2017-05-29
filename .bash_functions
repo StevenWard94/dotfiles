@@ -149,4 +149,18 @@ describe_pkg () {
 }
 
 
+show_pkg_brief () {
+    if [[ $# < 1 ]]; then
+        printf 'USAGE: show_pkg_brief [pkg-names...]\n' >&2
+        return 1
+    fi
+
+    for pkg in "$@"; do
+        apt-cache show "${pkg}" | grep -iE '^(package|version|replaces|provides|breaks|conflicts|(pre-)?depends|suggests|recommends):'
+        printf '\n----- --- ----- --- ----- --- -----\n'
+    done
+    return 0
+}
+
+
 # vim:ft=sh:syn=sh:
