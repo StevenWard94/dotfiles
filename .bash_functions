@@ -142,7 +142,7 @@ describe_pkg () {
     fi
 
     for pkg in "$@"; do
-        apt-cache show "${pkg}" | sed -rn '/^Description(-en)?:/,/^[-A-Za-z]+:/{/^Description(-en)?:/{p;n};/^[-A-Za-z]+:/{q};p}'
+        apt-cache show "${pkg}" | sed -rn '/^Description(-en)?:/,/^[^: ]+:/{/^Description(-en)?:/{p;n};/^[^: ]+:/{q};p}'
         echo -e "\n----- --- ----- --- ----- --- -----\n"
     done
     return 0
