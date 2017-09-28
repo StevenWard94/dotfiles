@@ -8,6 +8,11 @@ case $- in
       *) return;;
 esac
 
+
+# define $LFS variable for "Linux From Scratch"
+export LFS=/mnt/lfs
+
+
 # add user's HOME binaries to PATH
 if [[ -d ${HOME}/bin ]]; then
     case ":${PATH}:" in
@@ -185,6 +190,16 @@ if [[ -d ${HOME}/perl5/bin ]]; then
     esac
 fi
 
+
+# add perl6 (via https://github.com/tadzik/rakudobrew) binaries to $PATH
+if [[ -d ${HOME}/.rakudobrew/bin ]]; then
+    case ":${PATH}:" in
+        *":${HOME}/.rakudobrew/bin:"*) ;;
+        *) PATH="${HOME}/.rakudobrew/bin${PATH:+:${PATH}}";;
+    esac
+fi
+
+
 # define other environment variables for perl5 libraries
 PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
@@ -209,4 +224,3 @@ eval "$(pyenv init -)"
 PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
 export PATH
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-

@@ -83,6 +83,9 @@ alias pip3='python3.5 -m pip'
 alias pip2-update="python2.7 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H python2.7 -m pip install --upgrade"
 alias pip3-update="python3.5 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H python3.5 -m pip install --upgrade"
 
+# execute `pydoc` from pyenv's currently active python version
+alias pydoc="python -m pydoc"
+
 # always run tmux with 256-color support
 alias tmux='tmux -2'
 
@@ -96,3 +99,10 @@ alias dos2unix='dos_to_unix'
 #alias dos2unix="perl -pi -e 's/\r\n|\n|\r/\n/g'"
 
 # shortcuts for sed 'print' functions defined in ~/.bashrc
+# TODO: COMPLETE FUNCTIONS AND ALIASES AS MENTIONED ABOVE
+
+# alias for my ~/bin/date_sort scripts
+alias newest='/home/steven/bin/date_sort | head -n1'
+alias last-change='/home/steven/bin/date_sort | head -n1'
+alias date-sort='/home/steven/bin/date_sort'
+alias sort-date='/home/steven/bin/date_sort'

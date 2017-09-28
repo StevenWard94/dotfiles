@@ -16,17 +16,26 @@
 [alias]
 	undo-commit = reset --soft HEAD^
     unstage = reset HEAD --
+# `git status...` aliases
     stat = status --column=auto,column,nodense --untracked-files=normal
     stats = "!git -c status.relativepath=false status --column=auto,column,dense --untracked-files=all --ignored | less -R"
     diffstat = status -v
+# `git commit...` aliases
 	cm = commit -m
-	cm-reuse = commit -C HEAD
-    cm-reedit = commit -c HEAD
+	cm-reuse = commit -c
+    cm-reuse-last = commit -c HEAD
+    cm-copy = commit -C
+    cm-copy-last = commit -C HEAD
+# "informational" aliases
 	ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
 	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     log-tree = log --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%n' --abbrev-commit --date=relative --branches
 	last = log -1 HEAD
+    show-msg = log -n 1  # used like: `git show-msg HEAD~3` or `git show-msg HEAD^^^` etc.
     dif = diff HEAD^ HEAD
+# NOTE: add '--no-commit-id' as LAST (i.e. after commit id) argument of `file-log` or `files-last` to remove commit-id line
+    file-log = diff-tree --name-only -r    # must specify commit (either SHA hash, HEAD, HEAD^, HEAD~n, etc.)
+    files-last = diff-tree --name-only -r HEAD #--no-commit-id (if last commit's SHA hash is unwanted as first line of output)
     root = rev-parse --show-toplevel
     add-all = "!git root | xargs git add -v"
     upd8 = add -vu

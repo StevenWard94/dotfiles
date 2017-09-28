@@ -54,3 +54,5 @@ tags
 **/*.un
 **/..*
 
+# ignore directories containing a python virtual environment
+.env

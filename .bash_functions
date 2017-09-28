@@ -163,4 +163,78 @@ show_pkg_brief () {
 }
 
 
+# function to handle activation of python virtual environments
+activate () {
+    local env_name envs_dir
+    if [[ $# < 1 ]]; then
+        env_name="${PWD##*/}"
+    else
+        env_name="$1"
+    fi
+
+    envs_dir="${ENVS_DIR:-${WORKON_HOME:-${HOME}/.virtualenvs}}"
+    if ! [[ -f ${envs_dir}/${env_name}/bin/activate ]]; then
+        printf 'ERROR: VIRTUAL ENVIRONMENT NOT FOUND: %s\n' "${env_name}"
+        printf 'PLEASE ENSURE THAT THE ENVIRONMENT DIRECTORY EXISTS: %s\n' "${envs_dir}/${env_name}"
+        return 1
+    fi
+
+    source "${envs_dir}/${env_name}/bin/activate"
+}
+
+
+# function to handle display of npm package dependencies
+#npm_pkg_deps () {
+#    local flag_pattern='^--[a-zA-Z]+$'
+#    local usage_msg='USAGE: npm_pkg_deps [DEPS-TYPE-FLAG] [PKG-NAME]'
+#    if [[ $# < 2 ]]; then
+#        if  ! [[ $1 =~ ${flag_pattern} ]]; then
+#            printf '%s\n' "${usage_msg}"
+#            printf 'DEPENDENCY TYPE FLAG REQUIRED! NONE PROVIDED! --[dependencies | peerDependencies | devDependencies]\n'
+#            return 1
+#        else
+#            printf '%s\n' "${usage_msg}"
+#            printf 'NODE.JS PACKAGE NAME REQUIRED! NONE PROVIDED!\n'
+#            return 1
+#        fi
+#    fi
+#
+#    declare -a node_pkg_names
+#    declare -a deps_type_flags
+#    while [[ $# > 0 ]]; do
+#        if [[ $1 =~ ${flag_pattern} ]]; then
+#            flag="$1"
+#            case ${flag} in
+#                --peerDependencies|--peerdependencies|--PeerDependencies|--peerDeps|--peerdeps|--PeerDeps)
+#                    deps_type_flags=peerDependencies
+#                    ;;
+#                --devDependencies|--devdependencies|--DevDependencies|--devDeps|--devdeps|--DevDeps)
+#                    deps_type_flags=devDependencies
+#                    ;;
+#                --dependencies|--Dependencies|--deps|--Deps)
+#                    deps_type_flags=dependencies
+#                    ;;
+#                --json|--Json|--JSON)
+#                    json_fmt=TRUE
+#                    ;;
+#                *)
+#                    ;;
+#            esac
+#        else
+#            node_pkg_names=( "${node_pkg_names[@]}" "$1" )
+#        fi
+#        shift
+#    done
+#
+# TODO: npm info ${npm_pkg_names} --[ peerDependencies | devDependencies | dependencies ] (--json)?
+#
+#}
+
+
+# check if the working directory is in a python virtual environment
+is_in_virtenv () {
+    return $(python -c 'import sys; print ("1" if hasattr(sys, "real_prefix") else "0")')
+}
+
+
 # vim:ft=sh:syn=sh:

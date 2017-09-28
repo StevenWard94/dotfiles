@@ -2,7 +2,7 @@
 " Configure Target: Plugins and their Related Options
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/dotfiles/vim/
-" Last Change:      2017 May 3
+" Last Change:      2017 Jun 12
 " ======================================================================================================================
 
 " Setup \begin1
@@ -67,10 +67,11 @@
     Plug 'bitc/vim-hdevtools', { 'for': 'haskell' }
   "endif
 
-  "Plug 'klen/python-mode', { 'for': 'python' }
-  "Plug 'yssource/python.vim', { 'for': 'python' }
-  "Plug 'python_match.vim', { 'for': 'python' }
-  "Plug 'elzr/vim-json', {'for': 'json' }
+  Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
+  Plug 'klen/python-mode', { 'for': 'python' }
+  Plug 'yssource/python.vim', { 'for': 'python' }
+  Plug 'python_match.vim', { 'for': 'python' }
+  Plug 'elzr/vim-json', {'for': 'json' }
 
   Plug 'tpope/vim-rails', { 'for': 'ruby' }
   let g:rubycomplete_buffer_loading = 1
@@ -153,6 +154,8 @@
       highlight link SyntasticStyleErrorSign SignColumn
       highlight link SyntasticStyleWarningSign SignColumn
     endif
+
+    let g:syntastic_javascript_checkers = [ 'eslint' ]
 
   " \end2
 

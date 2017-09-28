@@ -2,8 +2,8 @@
 " Configure Target: General User - terminal-based Vim
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/myvim
-" Last Change:      2017 May 1
-" ======================================================================================================================
+" Last Change:      2017 May 31
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " General Settings \begin
 
