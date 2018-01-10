@@ -34,6 +34,11 @@ alias mkdir='mkdir -pv'
 # use colordiff for file comparisons
 alias diff='colordiff'
 
+# shortcut to list all users (usually the same as `cut -d: -f1 /etc/passwd`)
+alias getusers='getent passwd | cut -d: -f1'
+alias showusers='getent passwd | cut -d: -f1'
+alias lsusers='getent passwd | cut -d: -f1'
+
 # pretty-print output from 'mount' command
 alias mount='mount | column -t'
 
@@ -53,21 +58,17 @@ alias ports='netstat -tulanp'
 # shorthand to start clojure REPL
 alias repl='lein repl'
 
-# autocorrect for 'apt-get' commands w/o root priveleges
-alias apt-get='sudo apt-get'
 
 # shorthand for 'stack ghci' to open haskell repl
 alias ghci='stack ghci'
 
-# shorthand to execute apt-get update followed by dist-upgrade
-alias apt-update='sudo apt-get update && sudo apt-get dist-upgrade -y'
 
-# shorthand to execute apt-get purge
-alias purge='sudo apt-get purge'
 
 # shorthand to quickly perform apt-cache operations
 alias find-pkg='apt-cache search --names-only'
 alias show-pkg='apt-cache show'
+# alternate name for the 'show_pkg_brief' function in ~/.bash_functions
+alias show-pkg-brief='show_pkg_brief'
 
 # use 'pinfo' to view info pages by default
 alias info='pinfo'
@@ -106,3 +107,30 @@ alias newest='/home/steven/bin/date_sort | head -n1'
 alias last-change='/home/steven/bin/date_sort | head -n1'
 alias date-sort='/home/steven/bin/date_sort'
 alias sort-date='/home/steven/bin/date_sort'
+
+# shortcut to display a file's permissions in octal format
+alias mode='stat -c "%n: %a  -  Owner: %U(%u) in Group: %G(%g)"'
+
+# shortcuts to remove executables in 'bin/' directory, the 'build/' directory
+#   (and/or its contents), or both (which also executes `cd build`
+alias clear-bin='rm -v bin/*'
+alias rm-bins='clear-bin'
+alias rm-bin='clear-bin'
+
+alias rm-build-dir='rm -rdf build'
+alias clean-build-dir='rm -rdf build/*'
+alias rm-build-files='clean-build-dir'
+
+alias reset-build='rm -v bin/* && rm -rdf build/* && cd build'
+alias reset-last-build='reset-build'
+alias rm-build='reset-build'
+alias rm-last-build='reset-build'
+alias clean-last-build='reset-build'
+alias clean-build='reset-build'
+alias new-build='reset-build'
+
+# shortcut to print search paths to/for included headers
+alias gcc-include-paths='gcc -H'
+alias gcc-hpaths='gcc-include-paths'
+alias clang-include-paths='clang -H'
+alias clang-hpaths='clang-include-paths'

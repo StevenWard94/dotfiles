@@ -1,7 +1,7 @@
 " Vim-Gnome configuration file
 " Maintainer:   Steven Ward <stevenward94@gmail.com>
 " URL:          https://github.com/StevenWard94/myvim
-" Last Change:  2017 Jan 12
+" Last Change:  2017 Nov 9
 " ======================================================================================
 
 " General GUI Settings \begin1
@@ -19,8 +19,8 @@
     set guifont=Andale_Mono:h10,Consolas:h10
   endif
 
-  colorscheme molokai
-  highlight CursorLine guibg=gray10 
+  colorscheme blacksea
+  highlight CursorLine guibg=Grey10 
 
 
 " Utility Functions/Commands \begin1

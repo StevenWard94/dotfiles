@@ -216,6 +216,10 @@ if [[ -d ${HOME}/.pyenv ]]; then
     esac
 fi
 
+
+export GITHUB_AUTH_TOKEN='1b1d89a8a98ca979ff350c46b5ff33a944353e1f'
+
+
 # call `pyenv init` to enable shims & autocompletion in shell
 eval "$(pyenv init -)"
 

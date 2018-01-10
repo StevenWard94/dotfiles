@@ -237,4 +237,101 @@ is_in_virtenv () {
 }
 
 
+# Some functions for performing simple operations w/ bc more concisely
+
+calc () {
+    # general calculator - simply feeds a "here string" to bc
+    bc -l <<< "$@"
+}
+
+# quotient, product, add & subtract let user provide operands instead
+quotient () {
+    if (("$#" < 2)); then
+        if (("$#" == 1)); then
+            echo "$1"
+            return 1
+        else
+            echo "0"
+            return 2
+        fi
+    elif (("$#" == 2)); then
+        echo "$(calc $1/$2)"
+        return 0
+    else
+        local part_quotient
+        part_quotient=$(calc "$1/$2")
+        shift 2
+        echo "$(quotient $part_quotient $@)"
+    fi
+    return 0
+}
+alias divide='quotient'
+
+product () {
+    if (("$#" < 2)); then
+        if (("$#" == 1)); then
+            echo "$1"
+            return 1
+        else
+            echo "0"
+            return 2
+        fi
+    elif (("$#" == 2)); then
+        echo "$(calc $1*$2)"
+        return 0
+    else
+        local part_product
+        part_product=$(calc "$1*$2")
+        shift 2
+        echo "$(product $part_product $@)"
+    fi
+    return 0
+}
+alias multiply='product'
+
+# NOTE: `sum` already exists as /usr/bin/sum, so...add...
+add () {
+    if (("$#" < 2)); then
+        if (("$#" == 1)); then
+            echo "$1"
+            return 1
+        else
+            echo "0"
+            return 2
+        fi
+    elif (("$#" == 2)); then
+        echo "$(calc $1+$2)"
+        return 0
+    else
+        local part_sum
+        part_add=$(calc "$1+$2")
+        shift 2
+        echo "$(add $part_sum $@)"
+    fi
+    return 0
+}
+
+subtract () {
+    if (("$#" < 2)); then
+        if (("$#" == 1)); then
+            echo "$1"
+            return 1
+        else
+            echo "0"
+            return 2
+        fi
+    elif (("$#" == 2)); then
+        echo "$(calc $1-$2)"
+        return 0
+    else
+        local part_difference
+        part_difference=$(calc "$1-$2")
+        shift 2
+        echo "$(subtract $part_difference $@)"
+    fi
+    return 0
+}
+alias difference='subtract'
+
+
 # vim:ft=sh:syn=sh:

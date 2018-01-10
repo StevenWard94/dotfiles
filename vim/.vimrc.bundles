@@ -2,7 +2,7 @@
 " Configure Target: Plugins and their Related Options
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/dotfiles/vim/
-" Last Change:      2017 Jun 12
+" Last Change:      2018 Jan 9
 " ======================================================================================================================
 
 " Setup \begin1
@@ -24,7 +24,7 @@
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
   Plug 'abudden/taghighlight-automirror', { 'on': [] }
-  Plug 'file:///home/steven/Downloads/git-from-hg/easycolour'
+  Plug 'vim-scripts/EasyColour'
   Plug 'xolox/vim-easytags'
   Plug 'xolox/vim-misc'
   Plug 'ervandew/supertab'
@@ -53,7 +53,7 @@
   Plug 'easymotion/vim-easymotion'
 
   "if (&filetype == 'haskell')
-    Plug 'itchyny/haskell-indent-vim', { 'for': 'haskell' }
+    Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
     Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
     Plug 'enomsg/vim-haskellConcealPlus', { 'for': 'haskell' }
     Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
