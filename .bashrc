@@ -43,7 +43,7 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 
 # export my "would-be" value of $VIMRUNTIME for use outside of vim
-export VIMRUNTIME="/usr/share/vim/vim74"
+export VIMRUNTIME="/usr/local/share/vim/vim80"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
