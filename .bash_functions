@@ -1,6 +1,9 @@
-##################
-# CUSTOM FUNCTIONS
-##################
+########################################################################################
+#  File:        ~/dotfiles/.bash_functions                                             #
+#  Author:      Steven Ward <stevenward94@gmail.com>                                   #
+#  URL:         https://github.com/StevenWard94/dotfiles                               #
+#  Last Change: 2018 Feb 11                                                             #
+########################################################################################
 
 # convenience function for mkdir followed by cd
 mkcd () {
@@ -241,10 +244,9 @@ is_in_virtenv () {
 
 calc () {
     # general calculator - simply feeds a "here string" to bc
-    bc -l <<< "$@"
+    bc <<< "$@"
 }
 
-# quotient, product, add & subtract let user provide operands instead
 quotient () {
     if (("$#" < 2)); then
         if (("$#" == 1)); then
@@ -332,6 +334,41 @@ subtract () {
     return 0
 }
 alias difference='subtract'
+
+
+# Get file name of disk device(s) containing file(s)
+findpart () {
+
+    if [[ $# < 1 ]]; then
+        findpart "${PWD}"
+    elif [[ $# == 1 ]]; then
+        if [[ -e $1 ]]; then
+            df -P "$1" | awk '/^\/dev/ {print $1}'
+        else
+            printf 'findpart: %s: No such file or directory\n' "$1"
+            return 1
+        fi
+    else
+    local file_not_found_flag
+        for filename in $@; do
+            if [[ -e ${filename} ]]; then
+                printf '%s: %s\n' "${filename}" "$(df -P ${filename} | awk '/^\/dev/ {print $1}')"
+            else
+                printf 'findpart: %s: No such file or directory\n' "${filename}"
+                file_not_found_flag='TRUE'
+            fi
+        done
+        [[ -n ${file_not_found_flag} ]] && return 1 || return 0
+    fi
+}
+
+
+# Execute a crude "trace" for bash - for use w/ `trap`: `trap trace DEBUG`
+trace () {
+    echo "TRACE" \
+         "${BASH_SOURCE[1]}:${BASH_LINENO[0]}:${FUNCNAME[1]}:" \
+         "$BASH_COMMAND"
+}
 
 
 # vim:ft=sh:syn=sh:

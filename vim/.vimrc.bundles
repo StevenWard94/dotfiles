@@ -2,7 +2,7 @@
 " Configure Target: Plugins and their Related Options
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/dotfiles/vim/
-" Last Change:      2018 Jan 9
+" Last Change:      2018 Mar 12
 " ======================================================================================================================
 
 " Setup \begin1
@@ -28,6 +28,7 @@
   Plug 'xolox/vim-easytags'
   Plug 'xolox/vim-misc'
   Plug 'ervandew/supertab'
+  Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 
   " Git
   Plug 'tpope/vim-fugitive'
@@ -174,7 +175,7 @@
   " Easytags \begin2
     autocmd VimEnter .gvimrc,.vimrc,.vimrc.*,*.vim :call <SID>DisableVimEasytags()
     let g:easytags_dynamic_files = 1
-    let g:easytags_by_filetype = '/home/steven/lib/.tags'
+    "let g:easytags_by_filetype = '/home/steven/lib/.tags'
     let g:easytags_syntax_keyword = 'always'
     let g:easytags_async = 1
 
@@ -189,12 +190,23 @@
   " \end2
 
   " GHC-Mod \begin2
-    function! s:GHCmod_hask() abort
-      map <silent> tw :GhcModTypeInsert<CR>
-      map <silent> ts :GhcModSplitFunCase<CR>
-      map <silent> tq :GhcModType<CR>
-      map <silent> te :GhcModTypeClear<CR>
+    function! Map_GhcMod(key, cmd) abort
+      let map_lhs = 't'.a:key
+
+      if !exists(':'.a:cmd) || !empty(maparg(map_lhs))
+        return
+      endif
+      execute "map <silent> " . map_lhs . " :".a:cmd."<CR>"
     endfunction
+
+    augroup ghcmod_maps
+      autocmd!
+      autocmd Filetype haskell :call s:Map_GhcMod('w', 'GhcModTypeInsert')
+      autocmd Filetype haskell :call s:Map_GhcMod('s', 'GhcModSplitFunCase')
+      autocmd Filetype haskell :call s:Map_GhcMod('q', 'GhcModType')
+      autocmd Filetype haskell :call s:Map_GhcMod('e', 'GhcModTypeClear')
+    augroup END
+
   " \end2
 
   " Neco-GHC \begin2

@@ -47,6 +47,9 @@ alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%r"'
 alias today='date +"%x"'
 
+# print date in 'yyyymmdd' format (e.g., 20180312)
+alias date-Ymd='date +%Y%m%d'
+
 # stop 'ping' command after 10 ECHO_REQUEST packets
 alias pings='ping -c 10'
 # don't run with 1 second intervals
@@ -78,11 +81,11 @@ alias mzscheme='racket'
 
 # make different "pips" always refer to a specific python version
 alias pip2='python2.7 -m pip'
-alias pip3='python3.5 -m pip'
+alias pip3='python3.6 -m pip'
 
 # shortcut to update all python packages installed w/ 'pip'
 alias pip2-update="python2.7 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H python2.7 -m pip install --upgrade"
-alias pip3-update="python3.5 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H python3.5 -m pip install --upgrade"
+alias pip3-update="python3.6 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H python3.6 -m pip install --upgrade"
 
 # execute `pydoc` from pyenv's currently active python version
 alias pydoc="python -m pydoc"
