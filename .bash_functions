@@ -2,7 +2,7 @@
 #  File:        ~/dotfiles/.bash_functions                                             #
 #  Author:      Steven Ward <stevenward94@gmail.com>                                   #
 #  URL:         https://github.com/StevenWard94/dotfiles                               #
-#  Last Change: 2018 Feb 11                                                             #
+#  Last Change: 2018 Apr 16                                                            #
 ########################################################################################
 
 # convenience function for mkdir followed by cd
@@ -368,6 +368,18 @@ trace () {
     echo "TRACE" \
          "${BASH_SOURCE[1]}:${BASH_LINENO[0]}:${FUNCNAME[1]}:" \
          "$BASH_COMMAND"
+}
+
+
+tmux_new_session () {
+    local tmux_ls
+    tmux_ls=$(tmux ls 2>/dev/null | sed 's/:.*$//')
+
+    if [[ -z $(echo ${tmux_ls} | grep -E '^misc$') ]]; then
+        tmux new-session -s misc
+    else
+        tmux attach-session -t misc
+    fi
 }
 
 

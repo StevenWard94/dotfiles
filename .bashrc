@@ -225,7 +225,17 @@ export GITHUB_AUTH_TOKEN='1b1d89a8a98ca979ff350c46b5ff33a944353e1f'
 eval "$(pyenv init -)"
 
 
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
+
+# Helps prevent rvm's 'Warning! PATH is not properly set up...' message about path to gems
+export PATH="${GEM_HOME}/bin:$PATH"
+
 # remove duplicate entries from $PATH environment variable
 PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
 export PATH
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

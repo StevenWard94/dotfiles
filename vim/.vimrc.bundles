@@ -2,7 +2,7 @@
 " Configure Target: Plugins and their Related Options
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/dotfiles/vim/
-" Last Change:      2018 Mar 12
+" Last Change:      2018 Mar 15
 " ======================================================================================================================
 
 " Setup \begin1
@@ -190,7 +190,11 @@
   " \end2
 
   " GHC-Mod \begin2
-    function! Map_GhcMod(key, cmd) abort
+    " function that defines mappings for commands in GHC-Mod plugin
+    "     a:key  -  the key after 't' for the mapping's lhs (e.g., map <silent> tw ...)
+    "     a:cmd  -  the command executed by the desired mapping
+    " all mappings defined like: `map <silent> t{a:key} :{a:cmd}<CR>`
+    function! s:Map_GhcMod(key, cmd) abort
       let map_lhs = 't'.a:key
 
       if !exists(':'.a:cmd) || !empty(maparg(map_lhs))
@@ -199,13 +203,7 @@
       execute "map <silent> " . map_lhs . " :".a:cmd."<CR>"
     endfunction
 
-    augroup ghcmod_maps
-      autocmd!
-      autocmd Filetype haskell :call s:Map_GhcMod('w', 'GhcModTypeInsert')
-      autocmd Filetype haskell :call s:Map_GhcMod('s', 'GhcModSplitFunCase')
-      autocmd Filetype haskell :call s:Map_GhcMod('q', 'GhcModType')
-      autocmd Filetype haskell :call s:Map_GhcMod('e', 'GhcModTypeClear')
-    augroup END
+    " function is called in 'Haskell-Only' section
 
   " \end2
 
@@ -272,9 +270,13 @@
     " set variables or call functions that are non-existant for other file types
     " The functions called by the autocmds are defined above in the section for the
     " corresponding plugin
+
     augroup justhask_plugins
       autocmd!
-      autocmd FileType haskell :call s:GHCmod_hask()
+      autocmd Filetype haskell :call s:Map_GhcMod('w', 'GhcModTypeInsert')
+      autocmd Filetype haskell :call s:Map_GhcMod('s', 'GhcModSplitFunCase')
+      autocmd Filetype haskell :call s:Map_GhcMod('q', 'GhcModType')
+      autocmd Filetype haskell :call s:Map_GhcMod('e', 'GhcModTypeClear')
       autocmd FileType haskell :call s:NecoGHC_hask()
       autocmd FileType haskell :call s:Tabularize_hask()
     augroup END
