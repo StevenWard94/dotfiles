@@ -65,13 +65,13 @@ alias repl='lein repl'
 # shorthand for 'stack ghci' to open haskell repl
 alias ghci='stack ghci'
 
-
-
 # shorthand to quickly perform apt-cache operations
 alias find-pkg='apt-cache search --names-only'
 alias show-pkg='apt-cache show'
 # alternate name for the 'show_pkg_brief' function in ~/.bash_functions
 alias show-pkg-brief='show_pkg_brief'
+# alternate name for the 'describe_pkg' function in ~/.bash_functions
+alias describe-pkg='describe_pkg'
 
 # use 'pinfo' to view info pages by default
 alias info='pinfo'
@@ -107,7 +107,9 @@ alias tmux='tmux -2'
 alias tmux-new='tmux_new_session'
 alias new-session='tmux_new_session'
 # shorthand for `tmux ls`
-alias tls='tmux ls'
+alias t-ls='tmux ls'
+alias tmux-ls='t-ls'
+alias tmux-l='t-ls'
 
 # always display color escape sequences in pager
 alias less='less -R'
@@ -121,11 +123,11 @@ alias dos2unix='dos_to_unix'
 # shortcuts for sed 'print' functions defined in ~/.bashrc
 # TODO: COMPLETE FUNCTIONS AND ALIASES AS MENTIONED ABOVE
 
-# alias for my ~/bin/date_sort scripts
-alias newest='/home/steven/bin/date_sort | head -n1'
-alias last-change='/home/steven/bin/date_sort | head -n1'
-alias date-sort='/home/steven/bin/date_sort'
-alias sort-date='/home/steven/bin/date_sort'
+# alias for my ~/bin/date-sort scripts
+alias newest='/home/steven/bin/date-sort | head -n1'
+alias last-change='/home/steven/bin/date-sort | head -n1'
+alias date-sort='/home/steven/bin/date-sort'
+alias sort-date='/home/steven/bin/date-sort'
 
 ###############################
 ## ALIASES FOR `stat` COMMAND
@@ -170,3 +172,59 @@ alias gcc-include-paths='gcc -H'
 alias gcc-hpaths='gcc-include-paths'
 alias clang-include-paths='clang -H'
 alias clang-hpaths='clang-include-paths'
+
+# abbreviate (4 lines) output from `vim --version`
+alias vim-version="vim --version | sed -rn '1,3p;4s/^([^.]+)(\..*)$/\1/p'"
+alias vim--version='vim-version'
+alias vim-v='vim-version'
+alias vim-V='vim-version'
+alias vim--V='vim-version'
+alias vim--v='vim-version'
+
+# shorthand to open the MIPS Assembly and Runtime Simulator (MARS)
+alias Mars='java -jar /home/steven/Documents/LSU/spring_2019/csc-3501/MARS/Mars.jar'
+alias run-mars='Mars'
+
+# shortcuts for accessing Documents/LSU/spring_2019/* directories
+# .../spring_2019/csc-3501
+alias csc-3501-textbook="xdg-open '/home/steven/Documents/LSU/spring_2019/David A. Patterson, John L. Hennessy - Computer Organization and Design_ The Hardware_Software Interface 5th Edition - Elsevier (2013).pdf'"
+alias csc-3501-text='csc-3501-textbook'
+alias la-csc-3501='ls -A /home/steven/Documents/LSU/spring_2019/csc-3501'
+alias cd-csc-3501='cd /home/steven/Documents/LSU/spring_2019/csc-3501'
+# .../spring_2019/csc-2262
+alias la-csc-2262='ls -A /home/steven/Documents/LSU/spring_2019/csc-2262'
+alias la-numeric-methods='la-csc-2262'
+alias la-num-meth='la-csc-2262'
+alias cd-csc-2262='cd /home/steven/Documents/LSU/spring_2019/csc-2262'
+alias cd-numeric-methods='cd-csc-2262'
+alias cd-num-meth='cd-csc-2262'
+# .../spring_2019/csc-3102
+alias csc-3102-textbook="xdg-open '/home/steven/Documents/LSU/spring_2019/Michael T. Goodrich, Roberto Tamassia - Algorithm Design and Applications-Wiley (2014).pdf'"
+alias csc-3102-text='csc-3102-textbook'
+alias la-csc-3102='ls -A /home/steven/Documents/LSU/spring_2019/csc-3102'
+alias la-data-structures='la-csc-3102'
+alias la-data-struct='la-csc-3102'
+alias cd-csc-3102='cd /home/steven/Documents/LSU/spring_2019/csc-3102'
+alias cd-data-structures='cd-csc-3102'
+alias cd-data-struct='cd-csc-3102'
+# .../spring_2019/csc-3501
+alias la-csc-3501='ls -A /home/steven/Documents/LSU/spring_2019/csc-3501'
+alias la-computer-organization='la-csc-3501'
+alias la-computer-design='la-csc-3501'
+alias la-comp-org='la-csc-3501'
+alias la-comp-design='la-csc-3501'
+alias cd-csc-3501='cd /home/steven/Documents/LSU/spring_2019/csc-3501'
+alias cd-computer-organization='cd-csc-3501'
+alias cd-computer-design='cd-csc-3501'
+alias cd-comp-org='cd-csc-3501'
+alias cd-comp-design='cd-csc-3501'
+# .../spring_2019/csc-3200
+alias csc-3200-textbook="xdg-open '/home/steven/Documents/LSU/spring_2019/Richard A. Spinello - Cyberethics-Jones & Bartlett Publishers (2016).pdf'"
+alias csc-3200-text='csc-3200-textbook'
+alias la-csc-3200='ls -A /home/steven/Documents/LSU/spring_2019/csc-3200'
+alias cd-csc-3200='cd /home/steven/Documents/LSU/spring_2019/csc-3200'
+
+# shorthand for `octave --no-gui` to force the octave CLI
+alias octave-cli='octave --no-gui'
+alias octave-term='octave-cli'
+alias octave-shell='octave-cli'

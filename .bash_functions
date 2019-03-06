@@ -2,7 +2,7 @@
 #  File:        ~/dotfiles/.bash_functions                                             #
 #  Author:      Steven Ward <stevenward94@gmail.com>                                   #
 #  URL:         https://github.com/StevenWard94/dotfiles                               #
-#  Last Change: 2018 Apr 16                                                            #
+#  Last Change: 2019 Feb 25                                                            #
 ########################################################################################
 
 # convenience function for mkdir followed by cd
@@ -379,6 +379,43 @@ tmux_new_session () {
         tmux new-session -s misc
     else
         tmux attach-session -t misc
+    fi
+}
+
+
+# function to quickly print a selection of lines from piped output
+lines () {
+    sed -n "$1,$2p"
+}
+
+
+# wrapper for find to set `-regextype egrep`
+find () {
+    args=
+    for arg in $*
+    do
+        case $arg in
+            -iregex|-regex)
+                args="$args -regextype egrep $arg"
+                ;;
+            *)
+                args="$args $arg"
+                ;;
+        esac
+    done
+    set -f
+    command find $args
+    set +f
+}
+
+
+project_doc () {
+    local path_pattern="/home/steven/lib/cpp.d/CSC3102/proj?"
+    if [[ ${PWD} == ${path_pattern} ]]; then
+        xdg-open csc3102proj??s19.pdf
+    else
+        echo "path_pattern: error: document not found in current directory" >&2
+        return 1
     fi
 }
 

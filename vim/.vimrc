@@ -2,7 +2,7 @@
 " Configure Target: General User - terminal-based Vim
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/myvim
-" Last Change:      2018 Mar 16
+" Last Change:      2018 Jul 25
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " General Settings \begin
@@ -182,8 +182,10 @@
 
   let g:rehash256 = 1
   colorscheme tomorrow-night-eighties
+  "colorscheme molokai
   "set background=dark
-  let g:airline_theme = 'tomorrow'
+  "let g:airline_theme = 'molokai'
+  let g:airline_theme = 'distinguished'
   syntax enable
 
   set tabpagemax=15

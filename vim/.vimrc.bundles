@@ -2,15 +2,33 @@
 " Configure Target: Plugins and their Related Options
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/dotfiles/vim/
-" Last Change:      2018 Mar 15
+" Last Change:      2019 Mar 05
 " ======================================================================================================================
 
 " Setup \begin1
 
+  " A function wrapper for conditional plugin activation. The main purpose of this is to
+  "   automatically add empty 'on' and 'for' options when conditions are not met so that the plugin is
+  "   still registered. This will ensure that inactive plugins are not skipped by
+  "   :PlugInstall/:PlugUpdate OR REMOVED BY :PlugClean!
+  "   [Source: https://github.com/junegunn/vim-plug/wiki/tips]
+  " @param condition  condition for activating a plugin (function doesn't care which plugin)
+  " @param ...  optional dictionary containing vim-plug options (see ':help plug-options') for the
+  "   plugin [NOTE: 'on'/'for' values are ignored if condition wasn't met]
+  " @return  dictionary of vim-plug options for the plugin. If condition was met, it contains
+  "   any provided options (none => empty). If condition wasn't met, it contains at least the 'on'
+  "   and 'for' options with empty list values as well as any DIFFERENT options provided in args
+  function! PlugCondition(condition, ...)
+    " Get dictionary of options (if provided) or empty dictionary
+    let l:opts = get(a:000, 0, { })
+    return a:condition ? l:opts : extend(l:opts, { 'on': [], 'for': [] })
+  endfunction
+
   " Load plugins using Vim-Plug <https://github.com/junegunn/vim-plug>
   call plug#begin('~/.vim/bundle')
 
-  "Plug 'VundleVim/Vundle.vim'
+  " Adding this line makes 'vim-plug' install its own help-docs
+  Plug 'junegunn/vim-plug'
 
   " Support Bundles
   Plug 'Raimondi/delimitMate'
@@ -18,9 +36,8 @@
   Plug 'mattn/webapi-vim'
   Plug 'mattn/gist-vim'
   Plug 'kien/rainbow_parentheses.vim'
-  if executable('ctags')
-    Plug 'https://github.com/StevenWard94/tagbar.git', { 'on': ['TagbarOpen', 'TagbarToggle', 'TagbarOpenAutoClose'] }
-  endif
+  Plug 'https://github.com/StevenWard94/tagbar.git',
+      \ PlugCondition(executable('ctags'), { 'on': ['TagbarOpen', 'TagbarToggle', 'TagbarOpenAutoClose'] })
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
   Plug 'abudden/taghighlight-automirror', { 'on': [] }
@@ -54,18 +71,18 @@
   Plug 'easymotion/vim-easymotion'
 
   "if (&filetype == 'haskell')
-    Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
-    Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
-    Plug 'enomsg/vim-haskellConcealPlus', { 'for': 'haskell' }
-    Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
-    Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
-    Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
-    Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
-    Plug 'mpickering/hlint-refactor-vim', { 'for': 'haskell' }
-    Plug 'travitch/hasksyn', { 'for': 'haskell' }
-    Plug 'lukerandall/haskellmode-vim', { 'for': 'haskell' }
-    Plug 'adinapoli/cumino', { 'for': 'haskell' }
-    Plug 'bitc/vim-hdevtools', { 'for': 'haskell' }
+  Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
+  Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
+  Plug 'enomsg/vim-haskellConcealPlus', { 'for': 'haskell' }
+  Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
+  Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+  Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
+  Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
+  Plug 'mpickering/hlint-refactor-vim', { 'for': 'haskell' }
+  Plug 'travitch/hasksyn', { 'for': 'haskell' }
+  Plug 'lukerandall/haskellmode-vim', { 'for': 'haskell' }
+  Plug 'adinapoli/cumino', { 'for': 'haskell' }
+  Plug 'bitc/vim-hdevtools', { 'for': 'haskell' }
   "endif
 
   Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
@@ -296,4 +313,4 @@
 " \end1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim: fo-=oql:foldmarker=\\begin,\\end:foldmethod=marker:foldlevel=0:nospell:
+" vim: tw=100:fo-=oql:foldmarker=\\begin,\\end:foldmethod=marker:foldlevel=0:nospell:

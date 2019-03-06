@@ -44,7 +44,7 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 
 # export my "would-be" value of $VIMRUNTIME for use outside of vim
-export VIMRUNTIME="/usr/local/share/vim/vim80"
+export VIMRUNTIME="/usr/local/share/vim/vim81"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -236,6 +236,14 @@ export PATH="$PATH:$HOME/.rvm/bin"
 # Helps prevent rvm's 'Warning! PATH is not properly set up...' message about path to gems
 export PATH="${GEM_HOME}/bin:$PATH"
 
+PATH="${PATH}:./bin"
+
 # remove duplicate entries from $PATH environment variable
 PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
 export PATH
+
+
+export SENDGRID_USERNAME=apikey
+export SENDGRID_PASSWORD=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
+export STRIPE_TEST_SECRET_KEY=sk_test_8vxoPdQWRhn4UQHxWoMt7tgw
+export STRIPE_TEST_PUBLISHABLE_KEY=pk_test_t8B3D7xJ3Xyn7MChmmouKe7I
