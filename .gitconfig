@@ -3,12 +3,16 @@
 	name = Steven Ward
 	email = stevenward94@gmail.com
 
-# these credential settings are applied ONLY when connecting to https://github.com
+# these credentials ONLY apply when connecting to https://github.com
 [credential "https://github.com"]
     # use StevenWard94 as the username for all github.com connections requiring credentials
     username = StevenWard94
 	# enable external "helper" to store remote repo passwords for 2 hours after last entering them
 	helper = cache --timeout=7200
+
+# these credentials ONLY apply when connecting to bitbucket
+[credential "https://StevenWard94@bitbucket.org"]
+    helper = cache --timeout=7200
 
 [push]
 	default = simple

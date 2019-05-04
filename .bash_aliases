@@ -228,3 +228,7 @@ alias cd-csc-3200='cd /home/steven/Documents/LSU/spring_2019/csc-3200'
 alias octave-cli='octave --no-gui'
 alias octave-term='octave-cli'
 alias octave-shell='octave-cli'
+
+# getting battery info
+alias battery-info="upower -i $(upower -e | grep --color=never 'BAT')"
+alias battery-brief='battery-info | grep -E "state|to\ full|percentage"'

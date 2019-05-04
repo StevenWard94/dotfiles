@@ -2,7 +2,7 @@
 #  File:        ~/dotfiles/.bash_functions                                             #
 #  Author:      Steven Ward <stevenward94@gmail.com>                                   #
 #  URL:         https://github.com/StevenWard94/dotfiles                               #
-#  Last Change: 2019 Feb 25                                                            #
+#  Last Change: 2019 Mar 27                                                            #
 ########################################################################################
 
 # convenience function for mkdir followed by cd
@@ -410,7 +410,7 @@ find () {
 
 
 project_doc () {
-    local path_pattern="/home/steven/lib/cpp.d/CSC3102/proj?"
+    local path_pattern="/home/steven/lib/cpp.d/CSC-3102/proj?"
     if [[ ${PWD} == ${path_pattern} ]]; then
         xdg-open csc3102proj??s19.pdf
     else

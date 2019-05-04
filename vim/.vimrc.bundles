@@ -2,7 +2,7 @@
 " Configure Target: Plugins and their Related Options
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/dotfiles/vim/
-" Last Change:      2019 Mar 05
+" Last Change:      2019 Apr 18
 " ======================================================================================================================
 
 " Setup \begin1
@@ -35,7 +35,7 @@
   Plug 'nathanaelkane/vim-indent-guides'
   Plug 'mattn/webapi-vim'
   Plug 'mattn/gist-vim'
-  Plug 'kien/rainbow_parentheses.vim'
+  Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
   Plug 'https://github.com/StevenWard94/tagbar.git',
       \ PlugCondition(executable('ctags'), { 'on': ['TagbarOpen', 'TagbarToggle', 'TagbarOpenAutoClose'] })
   Plug 'tpope/vim-surround'
@@ -84,6 +84,8 @@
   Plug 'adinapoli/cumino', { 'for': 'haskell' }
   Plug 'bitc/vim-hdevtools', { 'for': 'haskell' }
   "endif
+
+  Plug 'pboettch/vim-cmake-syntax'
 
   Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
   Plug 'klen/python-mode', { 'for': 'python' }
@@ -279,6 +281,7 @@
 
   " delimitMate \begin2
     let delimitMate_expand_cr = 1
+    let delimitMate_quotes = "\" '"
   " \end2
 
   " Haskell-Only \begin2
