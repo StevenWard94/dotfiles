@@ -79,27 +79,25 @@ alias info='pinfo'
 # mzscheme crashes - use racket implementation instead
 alias mzscheme='racket'
 
-# make different "pips" always refer to a specific python version
-alias pip2='/usr/bin/python2 -m pip'
-alias pip3='/usr/bin/python3 -m pip'
+# make different "pips" always refer to a specific python version (uses default symlink for python/python3 - should be pyenv shims)
+# these are unnecessary because 'pip2' & 'pip3' are already defined by the corresponding pyenv shims 
+#alias pip2='python2 -m pip'
+#alias pip3='python3 -m pip'
 
 ## shortcuts to update all python (2.7 or 3) packages installed w/ pip
 # aliases for pip using python2.7 (i.e., pip2)
-alias update-pip2="/usr/bin/python2 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H /usr/bin/python2 -m pip install --upgrade"
+alias update-pip2="python2 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 python2 -m pip install --upgrade"
 alias upgrade-pip2='update-pip2'
 alias pip2-update='update-pip2'
 alias pip2-upgrade='update-pip2'
-alias update-pip2-user="/usr/bin/python2 -m pip freeze --user | sed '/^-e/d;s/=.*//' | xargs -n1 /usr/bin/python2 -m pip install --user --upgrade"
-alias upgrade-pip2-user='update-pip2-user'
 # aliases for pip using python3 (i.e., pip3)
-alias update-pip3="/usr/bin/python3 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 sudo -H /usr/bin/python3 -m pip install --upgrade"
+alias update-pip3="python3 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 python3 -m pip install --upgrade"
 alias upgrade-pip3='update-pip3'
 alias pip3-update='update-pip3'
 alias pip3-upgrade='update-pip3'
-alias update-pip3-user="/usr/bin/python3 -m pip freeze --user | sed '/^-e/d;s/=.*//' | xargs -n1 /usr/bin/python3 -m pip install --user --upgrade"
-alias upgrade-pip3-user='update-pip3-user'
-# execute `pydoc` from pyenv's currently active python version
-alias pydoc="python -m pydoc"
+# slightly more specific invocations of pydoc (no clue if this even matters...)
+alias py2doc='python2 -m pydoc'
+alias py3doc='python3 -m pydoc'
 
 # always run tmux with 256-color support
 alias tmux='tmux -2'
@@ -232,3 +230,6 @@ alias octave-shell='octave-cli'
 # getting battery info
 alias battery-info="upower -i $(upower -e | grep --color=never 'BAT')"
 alias battery-brief='battery-info | grep -E "state|to\ full|percentage"'
+
+# autocorrect when I forget 'sudo' with 'fdisk'
+alias fdisk="sudo fdisk"

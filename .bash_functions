@@ -2,7 +2,7 @@
 #  File:        ~/dotfiles/.bash_functions                                             #
 #  Author:      Steven Ward <stevenward94@gmail.com>                                   #
 #  URL:         https://github.com/StevenWard94/dotfiles                               #
-#  Last Change: 2019 Mar 27                                                            #
+#  Last Change: 2019 Jul 6                                                             #
 ########################################################################################
 
 # convenience function for mkdir followed by cd
@@ -145,6 +145,12 @@ describe_pkg () {
     fi
 
     for pkg in "$@"; do
+        apt-cache show "${pkg}" | sed -rn '/^(Package|Version):/p'
+        if dpkg -s "${pkg}" >/dev/null 2>&1; then
+            dpkg -s "${pkg}" | sed -rn '/^Status:/p'
+        else
+            echo "Status: not installed"
+        fi
         apt-cache show "${pkg}" | sed -rn '/^Description(-en)?:/,/^[^: ]+:/{/^Description(-en)?:/{p;n};/^[^: ]+:/{q};p}'
         echo -e "\n----- --- ----- --- ----- --- -----\n"
     done
@@ -418,6 +424,40 @@ project_doc () {
         return 1
     fi
 }
+
+
+# Returns 0 if package is installed; else 1
+pkg_installed () {
+    pkgname=$1
+    if dpkg --get-selections | grep -q "^${pkgname}[^[:space:]]*[[:space:]]*install$" >/dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+
+# Simple utility for getting info from /var/log/dpkg.log
+apt-history () {
+    case "$1" in
+        install)
+            cat /var/log/dpkg.log | grep 'install '
+            ;;
+        upgrade|remove)
+            cat /var/log/dpkg.log | grep $1
+            ;;
+        rollback)
+            cat /var/log/dpkg.log | grep upgrade | \
+                grep "$2" -A10000000 | \
+                grep "$3" -B10000000 | \
+                awk '{print $4"="$5}'
+            ;;
+        *)
+            cat /var/log/dpkg.log
+            ;;
+    esac
+}
+
 
 
 # vim:ft=sh:syn=sh:

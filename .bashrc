@@ -1,7 +1,20 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 
+# exit if BASH_SOURCED is already set
+if [[ -n ${BASH_SOURCED} ]]; then
+    exit
+fi
+
+# enable certain debugging features in interactive shell
 shopt -s extdebug
+
+# enable bash globbing extensions 
+# (see: https://linuxjournal.com/content/bash-extended-globbing)
+shopt -s extglob
+
+# include dotfiles in globbing results (./* -> ./Documents AND ./.vim)
+shopt -s dotglob
 
 # If not running interactively, don't do anything
 case $- in
@@ -18,7 +31,7 @@ export LFS=/mnt/lfs
 if [[ -d ${HOME}/bin ]]; then
     case ":${PATH}:" in
         *":${HOME}/bin:"*) ;;
-        *) PATH="${HOME}/bin${PATH:+:${PATH}}";;
+        *) export PATH="${HOME}/bin${PATH:+:${PATH}}";;
     esac
 fi
 
@@ -27,7 +40,7 @@ fi
 if [[ -d ${HOME}/.local/bin ]]; then
     case ":${PATH}:" in
         *"${HOME}/.local/bin"*) ;;
-        *) PATH="${HOME}/.local/bin${PATH:+:${PATH}}" ;;
+        *) export PATH="${HOME}/.local/bin${PATH:+:${PATH}}" ;;
     esac
 fi
 
@@ -43,8 +56,8 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# export my "would-be" value of $VIMRUNTIME for use outside of vim
-export VIMRUNTIME="/usr/local/share/vim/vim81"
+# export my "would-be" value of $VIMRUNTIME for use outside of vim (disabled in favor of neovim)
+#export VIMRUNTIME="/usr/share/vim/vim81"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -81,7 +94,7 @@ if [ -n "$force_color_prompt" ]; then
         # a case would tend to support setf rather than setaf.)
         color_prompt=yes
     else
-        color_prompt=
+        color_prompt="${color_prompt}"
     fi
 fi
 
@@ -108,13 +121,13 @@ fi
 
 # enable Powerline
 if type powerline >/dev/null 2>&1; then
-    export POWERLINE_DIR="${HOME}/.local/lib/python2.7/site-packages/powerline"
-    export POWERLINE_CONFIG="${HOME}/.local/lib/python2.7/site-packages/powerline/config_files"
+    export POWERLINE_DIR="${HOME}/.local/lib/python3.7/site-packages/powerline"
+    export POWERLINE_CONFIG="${HOME}/.local/lib/python3.7/site-packages/powerline/config_files"
 
     powerline-daemon -q
-    POWERLINE_BASH_CONTINUATION=1
-    POWERLINE_BASH_SELECT=1
-    . ~/.local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
+    export POWERLINE_BASH_CONTINUATION=1
+    export POWERLINE_BASH_SELECT=1
+    . ~/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
 fi
 
 # colored GCC warnings and errors
@@ -137,13 +150,13 @@ fi
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
+#if ! shopt -oq posix; then
+#  if [ -f /usr/share/bash-completion/bash_completion ]; then
+#    . /usr/share/bash-completion/bash_completion
+#  elif [ -f /etc/bash_completion ]; then
+#    . /etc/bash_completion
+#  fi
+#fi
 
 export NVM_DIR="$HOME/.nvm"
 [[ -s $NVM_DIR/nvm.sh ]] && . "$NVM_DIR/nvm.sh"  # this loads nvm
@@ -180,14 +193,16 @@ export NVM_DIR="$HOME/.nvm"
 . ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
 # source bash functions
-. ~/.bash_functions
+if [ -f ~/.bash_functions ]; then
+    . ~/.bash_functions
+fi
 
 
 # add perl binaries to $PATH environment variable
 if [[ -d ${HOME}/perl5/bin ]]; then
     case ":${PATH}:" in
         *":${HOME}/perl5/bin:"*) ;;
-        *) PATH="${HOME}/perl5/bin${PATH:+:${PATH}}";;
+        *) export PATH="${HOME}/perl5/bin${PATH:+:${PATH}}";;
     esac
 fi
 
@@ -196,33 +211,19 @@ fi
 if [[ -d ${HOME}/.rakudobrew/bin ]]; then
     case ":${PATH}:" in
         *":${HOME}/.rakudobrew/bin:"*) ;;
-        *) PATH="${HOME}/.rakudobrew/bin${PATH:+:${PATH}}";;
+        *) export PATH="${HOME}/.rakudobrew/bin${PATH:+:${PATH}}";;
     esac
 fi
 
 
 # define other environment variables for perl5 libraries
-PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"${HOME}/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=${HOME}/perl5"; export PERL_MM_OPT;
+export PERL5LIB="${HOME}/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+export PERL_LOCAL_LIB_ROOT="${HOME}/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+export PERL_MB_OPT="--install_base \"${HOME}/perl5\""; export PERL_MB_OPT;
+export PERL_MM_OPT="INSTALL_BASE=${HOME}/perl5"; export PERL_MM_OPT;
 
 
-# add $PYENV_ROOT environment variable and put pyenv binaries in $PATH
-if [[ -d ${HOME}/.pyenv ]]; then
-    export PYENV_ROOT="${HOME}/.pyenv"
-    case ":${PATH}:" in
-        *":${PYENV_ROOT}/bin:"*) ;;
-        *) PATH="${PYENV_ROOT}/bin${PATH:+:${PATH}}" ;;
-    esac
-fi
-
-
-export GITHUB_AUTH_TOKEN='1b1d89a8a98ca979ff350c46b5ff33a944353e1f'
-
-
-# call `pyenv init` to enable shims & autocompletion in shell
-eval "$(pyenv init -)"
+#export GITHUB_AUTH_TOKEN='1b1d89a8a98ca979ff350c46b5ff33a944353e1f'
 
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -234,16 +235,38 @@ export PATH="$PATH:$HOME/.rvm/bin"
 [[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
 
 # Helps prevent rvm's 'Warning! PATH is not properly set up...' message about path to gems
-export PATH="${GEM_HOME}/bin:$PATH"
+if [[ -n ${GEM_HOME} && -d ${GEM_HOME}/bin ]]; then
+    export PATH="${GEM_HOME}/bin:$PATH"
+fi
 
-PATH="${PATH}:./bin"
-
-# remove duplicate entries from $PATH environment variable
-PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
-export PATH
+export PATH="./bin:${PATH}"
 
 
 export SENDGRID_USERNAME=apikey
 export SENDGRID_PASSWORD=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
 export STRIPE_TEST_SECRET_KEY=sk_test_8vxoPdQWRhn4UQHxWoMt7tgw
 export STRIPE_TEST_PUBLISHABLE_KEY=pk_test_t8B3D7xJ3Xyn7MChmmouKe7I
+
+
+# add $PYENV_ROOT environment variable and put pyenv binaries in $PATH
+export PYENV_ROOT="${HOME}/.pyenv"
+export PATH="${PYENV_ROOT}/bin:${PATH}"
+
+
+# call `pyenv init` to enable shims & autocompletion in shell
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+fi
+
+# set Wine to use 32bit libraries
+export WINEARCH=win32
+export WINEPREFIX=~/.wine32
+
+
+# remove duplicate entries from $PATH environment variable
+PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
+export PATH
+
+
+# flag to show that bashrc was sourced
+export BASHRC_SOURCED=true

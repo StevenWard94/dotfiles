@@ -2,7 +2,7 @@
 " Configure Target: General User - terminal-based Vim
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/myvim
-" Last Change:      2018 Jul 25
+" Last Change:      2019 Jun 19
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " General Settings \begin
@@ -61,7 +61,7 @@
   " \end
 
   " make sure non-ASCII keys behave correctly
-  if !has('gui')
+  if !has('gui') && !has('nvim')
     set term=$TERM
   endif
 

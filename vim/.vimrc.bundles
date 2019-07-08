@@ -2,7 +2,7 @@
 " Configure Target: Plugins and their Related Options
 " Maintainer:       Steven Ward <stevenward94@gmail.com>
 " URL:              https://github.com/StevenWard94/dotfiles/vim/
-" Last Change:      2019 Apr 18
+" Last Change:      2019 Jun 11
 " ======================================================================================================================
 
 " Setup \begin1
@@ -35,7 +35,7 @@
   Plug 'nathanaelkane/vim-indent-guides'
   Plug 'mattn/webapi-vim'
   Plug 'mattn/gist-vim'
-  Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
+  Plug 'luochen1990/rainbow', { 'for': ['clojure', 'lisp', 'scheme', 'html', 'xml'] }
   Plug 'https://github.com/StevenWard94/tagbar.git',
       \ PlugCondition(executable('ctags'), { 'on': ['TagbarOpen', 'TagbarToggle', 'TagbarOpenAutoClose'] })
   Plug 'tpope/vim-surround'
@@ -307,10 +307,13 @@
     " \end2
 
     " Rainbow Parentheses \begin2
-      autocmd VimEnter * RainbowParenthesesToggle
-      autocmd Syntax * RainbowParenthesesLoadRound
-      autocmd Syntax * RainbowParenthesesLoadSquare
-      autocmd Syntax * RainbowParenthesesLoadBraces
+      if ( exists(':RainbowParenthesesToggle') == 2 )
+        let g:rainbow_active = 1
+        autocmd VimEnter * RainbowParenthesesToggle
+        autocmd Syntax * RainbowParenthesesLoadRound
+        autocmd Syntax * RainbowParenthesesLoadSquare
+        autocmd Syntax * RainbowParenthesesLoadBraces
+      endif
     " \end2
       
 " \end1
