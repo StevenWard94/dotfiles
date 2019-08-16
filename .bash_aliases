@@ -50,6 +50,9 @@ alias today='date +"%x"'
 # print date in 'yyyymmdd' format (e.g., 20180312)
 alias date-Ymd='date +%Y%m%d'
 
+# print date in RFC 3339 format with 'T' instead of a space before the time
+alias rfc-date="date --rfc-3339=seconds | sed 's/ /T/'"
+
 # stop 'ping' command after 10 ECHO_REQUEST packets
 alias pings='ping -c 10'
 # don't run with 1 second intervals
@@ -60,10 +63,6 @@ alias ports='netstat -tulanp'
 
 # shorthand to start clojure REPL
 alias repl='lein repl'
-
-
-# shorthand for 'stack ghci' to open haskell repl
-alias ghci='stack ghci'
 
 # shorthand to quickly perform apt-cache operations
 alias find-pkg='apt-cache search --names-only'
@@ -233,3 +232,9 @@ alias battery-brief='battery-info | grep -E "state|to\ full|percentage"'
 
 # autocorrect when I forget 'sudo' with 'fdisk'
 alias fdisk="sudo fdisk"
+
+# shorthand for 'xdg-open' command
+alias open="xdg-open"
+
+# use ghci-color instad of basic ghci
+alias ghci="ghci-color"

@@ -32,5 +32,7 @@ fi
 
 shopt -s dotglob
 
-#echo "LOADED ~/.bash_profile!" 
+# source ~/.xstartup (make "middle touchpad button" work like the "left button")
+. ~/.xstartup
 
+#echo "*** SOURCED ~/.bash_profile ***"

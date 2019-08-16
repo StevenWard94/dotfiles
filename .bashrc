@@ -262,6 +262,8 @@ fi
 export WINEARCH=win32
 export WINEPREFIX=~/.wine32
 
+# add general cabal binaries to PATH
+PATH="${HOME}/.cabal/bin:${PATH}"
 
 # remove duplicate entries from $PATH environment variable
 PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
@@ -270,3 +272,5 @@ export PATH
 
 # flag to show that bashrc was sourced
 export BASHRC_SOURCED=true
+
+#echo "*** SOURCED ~/.bashrc ***"
