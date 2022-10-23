@@ -181,11 +181,11 @@
   set t_Co=256
 
   let g:rehash256 = 1
-  colorscheme tomorrow-night-eighties
-  "colorscheme molokai
+  "colorscheme tomorrow-night-eighties
+  colorscheme molokai
   "set background=dark
-  "let g:airline_theme = 'molokai'
-  let g:airline_theme = 'distinguished'
+  let g:airline_theme = 'molokai'
+  "let g:airline_theme = 'distinguished'
   syntax enable
 
   set tabpagemax=15

@@ -121,13 +121,13 @@ fi
 
 # enable Powerline
 if type powerline >/dev/null 2>&1; then
-    export POWERLINE_DIR="${HOME}/.local/lib/python3.7/site-packages/powerline"
-    export POWERLINE_CONFIG="${HOME}/.local/lib/python3.7/site-packages/powerline/config_files"
+    export POWERLINE_DIR="${HOME}/.local/lib/python3.9/site-packages/powerline"
+    export POWERLINE_CONFIG="${HOME}/.local/lib/python3.9/site-packages/powerline/config_files"
 
     powerline-daemon -q
     export POWERLINE_BASH_CONTINUATION=1
     export POWERLINE_BASH_SELECT=1
-    . ~/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
+    . ~/.local/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
 fi
 
 # colored GCC warnings and errors
@@ -228,19 +228,7 @@ export PERL_MM_OPT="INSTALL_BASE=${HOME}/perl5"; export PERL_MM_OPT;
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-[[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
-
-# Helps prevent rvm's 'Warning! PATH is not properly set up...' message about path to gems
-if [[ -n ${GEM_HOME} && -d ${GEM_HOME}/bin ]]; then
-    export PATH="${GEM_HOME}/bin:$PATH"
-fi
-
 export PATH="./bin:${PATH}"
-
 
 export SENDGRID_USERNAME=apikey
 export SENDGRID_PASSWORD=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
@@ -249,14 +237,14 @@ export STRIPE_TEST_PUBLISHABLE_KEY=pk_test_t8B3D7xJ3Xyn7MChmmouKe7I
 
 
 # add $PYENV_ROOT environment variable and put pyenv binaries in $PATH
-export PYENV_ROOT="${HOME}/.pyenv"
-export PATH="${PYENV_ROOT}/bin:${PATH}"
+#export PYENV_ROOT="${HOME}/.pyenv"
+#export PATH="${PYENV_ROOT}/bin:${PATH}"
 
 
 # call `pyenv init` to enable shims & autocompletion in shell
-if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-fi
+#if command -v pyenv 1>/dev/null 2>&1; then
+#    eval "$(pyenv init -)"
+#fi
 
 # set Wine to use 32bit libraries
 export WINEARCH=win32
@@ -265,10 +253,32 @@ export WINEPREFIX=~/.wine32
 # add general cabal binaries to PATH
 PATH="${HOME}/.cabal/bin:${PATH}"
 
-# remove duplicate entries from $PATH environment variable
-PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
-export PATH
 
+if [ -s "${HOME}/.rvmrc" ]; then
+    source "${HOME}/.rvmrc"
+fi
+
+if [ -s "${rvm_path-$HOME/.rvm}/scripts/rvm" ]; then
+    source "${rvm_path-$HOME/.rvm}/scripts/rvm"
+elif [ -s "${HOME}/.rvm/scripts/rvm" ]; then
+    source "${HOME}/.rvm/scripts/rvm"
+fi
+
+# Helps prevent rvm's 'Warning! PATH is not properly set up...' message about path to gems
+if [[ -n ${GEM_HOME} && -d ${GEM_HOME}/bin ]]; then
+    export PATH="${GEM_HOME}/bin:${HOME}/.rvm/bin:${PATH}"
+else
+    export PATH="${HOME}/.rvm/bin:${PATH}"
+fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# commented out because I added it to the if-else block above to keep the gempath's bin first
+#export PATH="$HOME/.rvm/bin:${PATH}"
+
+
+# remove duplicate entries from $PATH environment variable
+# PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
+# export PATH
 
 # flag to show that bashrc was sourced
 export BASHRC_SOURCED=true

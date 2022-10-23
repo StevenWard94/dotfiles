@@ -1,3 +1,23 @@
+# aliases for opening textbooks in LSU/fall_2019
+# IE 3302 [Stats]
+alias open-stats-textbook='xdg-open /home/steven/Documents/LSU/fall_2019/ie-3302/probability-and-statistics_9ed.pdf'
+alias stats-textbook='open-stats-textbook'
+alias stats-text='open-stats-textbook'
+alias stats-txt='open-stats-textbook'
+# CSC 4402 [Database Systems]
+alias open-4402-textbook='xdg-open /home/steven/Documents/LSU/fall_2019/csc-4402/database-system-concepts_7ed.pdf'
+alias open-db-textbook='open-4402-textbook'
+alias db-text='open-4402-textbook'
+alias db-txt='open-4402-textbook'
+# cd to current semester/courses
+alias cd-lsu='cd /home/steven/Documents/LSU/fall_2019'
+alias cd-stats='cd /home/steven/Documents/LSU/fall_2019/ie-3302'
+alias cd-stat='cd-stats'
+alias cd-database-systems='cd /home/steven/Documents/LSU/fall_2019/csc-4402'
+alias cd-dbs='cd-database-systems'
+alias cd-operating-systems='cd /home/steven/Documents/LSU/fall_2019/csc-4103'
+alias cd-os='cd-operating-systems'
+
 alias ls='ls --color=always'
 alias la='ls -A'
 alias ll='ls -alF'
@@ -90,13 +110,21 @@ alias upgrade-pip2='update-pip2'
 alias pip2-update='update-pip2'
 alias pip2-upgrade='update-pip2'
 # aliases for pip using python3 (i.e., pip3)
-alias update-pip3="python3 -m pip freeze --local | sed '/^-e/d;s/=.*//' | xargs -n1 python3 -m pip install --upgrade"
+# pip 22.3 no longer allows 'freeze' formatting with 'outdated' so this now throws an error
+#alias update-pip3="python3 -m pip list --outdated --format=freeze | sed '/^-e/d;s/=.*//' | xargs -n1 python3 -m pip install -U"
+# new solution: use 'json' formatting and then reformat the output with jq to look like 'freeze' format
+alias update-pip3="python3 -m pip list --outdated --format=json | jq -r '.[] | .name+\"=\"+.latest_version' | sed '/^-e/d;s/=.*//' | xargs -n1 python3 -m pip install --upgrade"
 alias upgrade-pip3='update-pip3'
 alias pip3-update='update-pip3'
 alias pip3-upgrade='update-pip3'
 # slightly more specific invocations of pydoc (no clue if this even matters...)
 alias py2doc='python2 -m pydoc'
 alias py3doc='python3 -m pydoc'
+# go to site-packages for latest python (path needs to be manually updated along with python version)
+alias cd-python-packages='cd_py_pkgs'
+alias cd-python3-packages='cd-python-packages'
+alias cd-py-packages='cd-python-packages'
+alias cd-py-pkgs='cd-python-packages'
 
 # always run tmux with 256-color support
 alias tmux='tmux -2'
@@ -181,45 +209,6 @@ alias vim--v='vim-version'
 # shorthand to open the MIPS Assembly and Runtime Simulator (MARS)
 alias Mars='java -jar /home/steven/Documents/LSU/spring_2019/csc-3501/MARS/Mars.jar'
 alias run-mars='Mars'
-
-# shortcuts for accessing Documents/LSU/spring_2019/* directories
-# .../spring_2019/csc-3501
-alias csc-3501-textbook="xdg-open '/home/steven/Documents/LSU/spring_2019/David A. Patterson, John L. Hennessy - Computer Organization and Design_ The Hardware_Software Interface 5th Edition - Elsevier (2013).pdf'"
-alias csc-3501-text='csc-3501-textbook'
-alias la-csc-3501='ls -A /home/steven/Documents/LSU/spring_2019/csc-3501'
-alias cd-csc-3501='cd /home/steven/Documents/LSU/spring_2019/csc-3501'
-# .../spring_2019/csc-2262
-alias la-csc-2262='ls -A /home/steven/Documents/LSU/spring_2019/csc-2262'
-alias la-numeric-methods='la-csc-2262'
-alias la-num-meth='la-csc-2262'
-alias cd-csc-2262='cd /home/steven/Documents/LSU/spring_2019/csc-2262'
-alias cd-numeric-methods='cd-csc-2262'
-alias cd-num-meth='cd-csc-2262'
-# .../spring_2019/csc-3102
-alias csc-3102-textbook="xdg-open '/home/steven/Documents/LSU/spring_2019/Michael T. Goodrich, Roberto Tamassia - Algorithm Design and Applications-Wiley (2014).pdf'"
-alias csc-3102-text='csc-3102-textbook'
-alias la-csc-3102='ls -A /home/steven/Documents/LSU/spring_2019/csc-3102'
-alias la-data-structures='la-csc-3102'
-alias la-data-struct='la-csc-3102'
-alias cd-csc-3102='cd /home/steven/Documents/LSU/spring_2019/csc-3102'
-alias cd-data-structures='cd-csc-3102'
-alias cd-data-struct='cd-csc-3102'
-# .../spring_2019/csc-3501
-alias la-csc-3501='ls -A /home/steven/Documents/LSU/spring_2019/csc-3501'
-alias la-computer-organization='la-csc-3501'
-alias la-computer-design='la-csc-3501'
-alias la-comp-org='la-csc-3501'
-alias la-comp-design='la-csc-3501'
-alias cd-csc-3501='cd /home/steven/Documents/LSU/spring_2019/csc-3501'
-alias cd-computer-organization='cd-csc-3501'
-alias cd-computer-design='cd-csc-3501'
-alias cd-comp-org='cd-csc-3501'
-alias cd-comp-design='cd-csc-3501'
-# .../spring_2019/csc-3200
-alias csc-3200-textbook="xdg-open '/home/steven/Documents/LSU/spring_2019/Richard A. Spinello - Cyberethics-Jones & Bartlett Publishers (2016).pdf'"
-alias csc-3200-text='csc-3200-textbook'
-alias la-csc-3200='ls -A /home/steven/Documents/LSU/spring_2019/csc-3200'
-alias cd-csc-3200='cd /home/steven/Documents/LSU/spring_2019/csc-3200'
 
 # shorthand for `octave --no-gui` to force the octave CLI
 alias octave-cli='octave --no-gui'

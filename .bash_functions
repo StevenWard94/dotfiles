@@ -2,7 +2,7 @@
 #  File:        ~/dotfiles/.bash_functions                                             #
 #  Author:      Steven Ward <stevenward94@gmail.com>                                   #
 #  URL:         https://github.com/StevenWard94/dotfiles                               #
-#  Last Change: 2019 Jul 6                                                             #
+#  Last Change: 2022 Jun 7                                                             #
 ########################################################################################
 
 # convenience function for mkdir followed by cd
@@ -189,6 +189,36 @@ activate () {
     fi
 
     source "${envs_dir}/${env_name}/bin/activate"
+}
+
+
+# function to quickly jump to a specific site-packages directory
+cd_py_pkgs () {
+    local site_pkgs_path="/home/steven/.local/lib/python3.9/site-packages"
+
+    if [[ "$#" < 1 ]]; then
+        if cd "${site_pkgs_path}"; then
+            return 0
+        else
+            printf "ERROR: Failed to change working directory to target: %s\n" "${site_pkgs_path}" >&2
+            printf "Make sure that site-packages path defined in function exists and matches latest python version\n" >&2
+            printf "${HOME}/.bash_functions: cd_py_pkgs ()\n" >&2
+            return 1
+        fi
+    else
+        local pkg_folder_name="$1"
+        local pkg_folder_path="${site_pkgs_path}/$1"
+
+        if cd "${pkg_folder_path}"; then
+            return 0
+        else
+            printf "ERROR: Failed to change working directory to target: %s\n" "${pkg_folder_path}\n" >&2
+            printf "Make sure that site-packages path specified in function exists and matches latest python version\n" >&2
+            printf "NOTE: Package names do not always match the corresponding directory name\n" >&2
+            return 1
+        fi
+    fi
+    return 2
 }
 
 
